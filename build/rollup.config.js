@@ -17,7 +17,6 @@ export default {
     }
   },
   plugins: [
-    commonjs(),
     vue({
       css: true,
       compileTemplate: true

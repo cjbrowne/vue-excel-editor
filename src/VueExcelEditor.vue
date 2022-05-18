@@ -2,7 +2,7 @@
   <div class="vue-excel-editor" :style="{display: 'inline-block', 'max-width': width}">
     <div class="component-content">
       <!-- No record -->
-      <div v-if="localizedLabel.noRecordIndicator && pagingTable.length == 0" class="norecord" :style="{bottom: noFooter? '12px' : '37px'}">
+      <div v-if="localizedLabel.noRecordIndicator && pagingTable.length === 0" class="norecord" :style="{bottom: noFooter? '12px' : '37px'}">
         {{ localizedLabel.noRecordIndicator }}
       </div>
 
@@ -46,8 +46,8 @@
                   v-show="!item.invisible"
                   :key="`th-${p}`"
                   :colspan="p === fields.length - 1 && vScroller.buttonHeight < vScroller.height ? 2: 1"
-                  :class="{'sort-asc-sign': sortPos==p && sortDir==1,
-                          'sort-des-sign': sortPos==p && sortDir==-1,
+                  :class="{'sort-asc-sign': sortPos===p && sortDir===1,
+                          'sort-des-sign': sortPos===p && sortDir===-1,
                           'sticky-column': item.sticky}"
                   :style="{left: item.left}"
                   @mousedown="headerClick($event, p)"
@@ -89,7 +89,7 @@
             </tr>
           </thead>
           <tbody @mousedown="mouseDown">
-            <tr v-if="localizedLabel.noRecordIndicator && pagingTable.length == 0">
+            <tr v-if="localizedLabel.noRecordIndicator && pagingTable.length === 0">
               <td colspan="100%" style="height:40px; vertical-align: middle; text-align: center"></td>
             </tr>
             <tr v-else
@@ -117,7 +117,7 @@
                       error: errmsg[`id-${record.$id}-${item.name}`],
                       link: item.link,
                       select: item.options,
-                      datepick: item.type == 'date',
+                      datepick: item.type === 'date',
                       'sticky-column': item.sticky
                     }"
                     :style="Object.assign(cellStyle(record, item), renderColumnCellStyle(item))"
@@ -281,7 +281,7 @@ import VueExcelFilter from './VueExcelFilter.vue'
 import PanelFilter from './PanelFilter.vue'
 import PanelSetting from './PanelSetting.vue'
 import PanelFind from './PanelFind.vue'
-import DatePicker from 'vue2-datepicker'
+import DatePicker from 'vue3-datepicker'
 import XLSX from 'xlsx'
 
 import 'vue2-datepicker/index.css'
