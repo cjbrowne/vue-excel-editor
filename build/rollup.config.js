@@ -1,8 +1,7 @@
-import commonjs from 'rollup-plugin-commonjs'
 import vue from 'rollup-plugin-vue'
 import resolve from '@rollup/plugin-node-resolve'
 import minify from 'rollup-plugin-babel-minify'
-import css from 'rollup-plugin-css-porter'
+import css from 'rollup-plugin-import-css'
 import cleanup from 'rollup-plugin-cleanup'
 
 export default {
@@ -22,11 +21,12 @@ export default {
       compileTemplate: true
     }),
     resolve({
-      customResolveOptions: {
-        moduleDirectory: 'node_modules'
-      }
+      moduleDirectories: ['node_modules'],
     }),
-    minify(),
+    minify({
+      // workaround https://github.com/babel/minify/issues/556
+      mangle: false
+    }),
     css(),
     cleanup()
   ],

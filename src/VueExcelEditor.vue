@@ -108,7 +108,7 @@
                   @click="rowLabelClick">
                 <span v-html="recordLabel(pageTop + rowPos + 1, record)"></span>
               </td>
-              <template v-for="(item, p) in fields">
+              <template v-for="(item, p) in fields" :key="p">
                 <td v-show="!item.invisible"
                     :id="`id-${record.$id}-${item.name}`"
                     :cell-RC="`${rowPos}-${item.name}`"
@@ -121,7 +121,6 @@
                       'sticky-column': item.sticky
                     }"
                     :style="Object.assign(cellStyle(record, item), renderColumnCellStyle(item))"
-                    :key="p"
                     @mouseover="cellMouseOver"
                     @mousemove="cellMouseMove">{{ item.toText(record[item.name]) }}</td>
               </template>
@@ -131,7 +130,7 @@
           <tfoot>
             <tr v-show="pagingTable.length && summaryRow">
               <td class="row-summary first-col">&nbsp;</td>
-              <template v-for="(field, p) in fields">
+              <template v-for="(field, p) in fields" :key="`f${p}`">
                 <td v-show="!field.invisible"
                     class="row-summary"
                     :colspan="p === fields.length - 1 && vScroller.buttonHeight < vScroller.height ? 2: 1"
@@ -141,7 +140,7 @@
                       'summary-column2': field.summary
                     }"
                     :style="renderColumnCellStyle(field)"
-                    :key="`f${p}`">{{ summary[field.name] }}</td>
+                    >{{ summary[field.name] }}</td>
               </template>
             </tr>
           </tfoot>
@@ -276,15 +275,13 @@
 </template>
 
 <script>
-import Vue from 'vue'
+import {nextTick} from 'vue'
 import VueExcelFilter from './VueExcelFilter.vue'
 import PanelFilter from './PanelFilter.vue'
 import PanelSetting from './PanelSetting.vue'
 import PanelFind from './PanelFind.vue'
 import DatePicker from 'vue3-datepicker'
 import XLSX from 'xlsx'
-
-import 'vue2-datepicker/index.css'
 
 export default {
   components: {
@@ -2685,7 +2682,7 @@ export default {
 
       if (this.lazyTimeout[hash]) clearTimeout(this.lazyTimeout[hash])
       this.lazyTimeout[hash] = setTimeout(() => {
-        Vue.nextTick(() => {
+        nextTick(() => {
           p(this.lazyBuffer[hash])
           delete this.lazyTimeout[hash]
           delete this.lazyBuffer[hash]
@@ -2697,6 +2694,8 @@ export default {
 </script>
 
 <style scoped>
+@import 'vue3-datepicker/dist/vue3-datepicker.css';
+
 input:focus, input:active:focus, input.active:focus {
   outline: none;
   box-shadow: inset 0 -1px 0 #ddd;
