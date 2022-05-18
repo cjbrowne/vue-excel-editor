@@ -1,38 +1,34 @@
-import vue from 'rollup-plugin-vue'
-import resolve from '@rollup/plugin-node-resolve'
-import minify from 'rollup-plugin-babel-minify'
-import css from 'rollup-plugin-import-css'
-import cleanup from 'rollup-plugin-cleanup'
+import vue from "rollup-plugin-vue";
+import resolve from "@rollup/plugin-node-resolve";
+import minify from "rollup-plugin-babel-minify";
+import css from "rollup-plugin-import-css";
+import cleanup from "rollup-plugin-cleanup";
 
 export default {
-  input: 'src/main.js',
+  input: "src/main.js",
   output: {
-    name: 'VueExcelComponent',
-    exports: 'named',
+    name: "VueExcelComponent",
+    exports: "named",
     globals: {
-      'vuedraggable': 'vuedraggable',
-      'xlsx': 'XLSX',
-      'moment': 'moment'
-    }
+      vuedraggable: "vuedraggable",
+      xlsx: "XLSX",
+      moment: "moment",
+    },
   },
   plugins: [
     vue({
       css: true,
-      compileTemplate: true
+      compileTemplate: true,
     }),
     resolve({
-      moduleDirectories: ['node_modules'],
+      moduleDirectories: ["node_modules"],
     }),
     minify({
       // workaround https://github.com/babel/minify/issues/556
-      mangle: false
+      mangle: false,
     }),
     css(),
-    cleanup()
+    cleanup(),
   ],
-  external: [
-    'vuedraggable',
-    'xlsx',
-    'moment'
-  ]
-}
+  external: ["vuedraggable", "xlsx", "moment"],
+};
